@@ -4,13 +4,13 @@ var keys = require("./keys");
 var Spotify = require('node-spotify-api');
 var axios = require("axios");
 var moment = require('moment');
+var fs = require("fs");
 
 var argument = process.argv[2];
 
-if(argument === "spotify-this-song")
-{
+function spotifyThis(selector) {
     var spotify = new Spotify(keys.spotify);
-    var song = process.argv[3] || "The Sign";
+    var song = process.argv[3] || selector || "The Sign";
     console.log("--SPOTIFY--")
     spotify
     .search({ type: 'track', query: song, limit: 5 })
@@ -36,9 +36,8 @@ if(argument === "spotify-this-song")
     });
 }
 
-else if(argument === "concert-this")
-{
-    var artist = process.argv[3];
+function concertThis(selector) {
+    var artist = process.argv[3] || selector;
     console.log("--BANDSINTOWN--")
 
     axios
@@ -67,10 +66,9 @@ else if(argument === "concert-this")
     });
 }
 
-else if(argument === "movie-this")
-{
+function movieThis(selector) {
     console.log("--OMDB--")
-    var movie = process.argv[3] || "Mr. Nobody";
+    var movie = process.argv[3] || selector || "Mr. Nobody";
 
     axios
     .get("http://www.omdbapi.com/?apikey=trilogy&t=" + movie)
@@ -103,4 +101,54 @@ else if(argument === "movie-this")
         }
         console.log(error.config);
     });
+}
+
+if(argument === "spotify-this-song")
+{
+    spotifyThis(undefined);
+}
+
+else if(argument === "concert-this")
+{
+    concertThis(undefined);
+}
+
+else if(argument === "movie-this")
+{
+    movieThis(undefined);
+}
+
+else if(argument === "do-what-it-says") {
+    fs.readFile("random.txt", "utf8", function(error, data) {
+
+        if (error) {
+          return console.log(error);
+        }
+            
+        var dataArr = data.split(",");
+        var operation = "";
+        if(dataArr[0] === "spotify-this-song") {
+            argument = dataArr[0];
+            operation = dataArr[1];
+            spotifyThis(operation);
+        }
+        else if(dataArr[0] === "concert-this") {
+            argument = dataArr[0];
+            operation = dataArr[1];
+            spotifyThis(operation);
+        }
+        else if(dataArr[0] === "concert-this") {
+            argument = dataArr[0];
+            operation = dataArr[1];
+            spotifyThis(operation);
+        }
+        else {
+            console.log("Error, did not read a valid argument");
+        }
+
+      });
+      
+}
+else {
+    console.log("Error, did not read a valid argument");
 }
