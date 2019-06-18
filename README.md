@@ -42,4 +42,12 @@ Allows you to use the OMDB API via Axios. Using a movie as a selector, it output
 ###### do-what-it-says
 Allows you to use a `random.txt` file to issue a command to the app to run one of the three arguments above along with a selector.
 
-[Screenshots of the app in action](https://github.com/hcamposa1994/liri-node-app/tree/master/screenshots)
+###### Screenshots of the app in action
+`spotify-this-song`
+![alt text](./screenshots/spotify-this.PNG)
+`concert-this`
+![alt text](./screenshots/concert-this.PNG)
+`movie-this`
+![alt text](./screenshots/movie-this.PNG)
+`do-what-it-says`
+![alt text](./screenshots/do-what-it-says.PNG)
