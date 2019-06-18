@@ -34,9 +34,9 @@ if(argument === "spotify-this-song")
     .catch(function(err) {
         console.log(err);
     });
-};
+}
 
-if(argument === "concert-this")
+else if(argument === "concert-this")
 {
     var artist = process.argv[3];
     console.log("--BANDSINTOWN--")
@@ -51,6 +51,44 @@ if(argument === "concert-this")
             console.log("Venue location: " + response.data[i].venue.city + ", " + response.data[i].venue.region);
             console.log("Event time: " + moment(response.data[i].datetime).format("MM/DD/YYYY"));
         }
+
+    })
+    .catch(function(error) {
+        if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        } else if (error.request) {
+        console.log(error.request);
+        } else {
+        console.log("Error", error.message);
+        }
+        console.log(error.config);
+    });
+}
+
+else if(argument === "movie-this")
+{
+    console.log("--OMDB--")
+    var movie = process.argv[3] || "Mr. Nobody";
+
+    axios
+    .get("http://www.omdbapi.com/?apikey=trilogy&t=" + movie)
+    .then(function(response) {
+        var movieInfo = response.data;
+        console.log("Title: " +  movieInfo.Title);
+        console.log("Year released: " +  movieInfo.Year);
+        console.log("IMDB rating: " +  movieInfo.imdbRating);
+        for (let i = 0; i < movieInfo.Ratings.length; i++){
+            if(movieInfo.Ratings[i].Source === "Rotten Tomatoes") {
+                console.log("Rotten Tomatoes rating: " +  movieInfo.Ratings[i].Value);
+            }
+        }
+        console.log("Country where movie was produced: " +  movieInfo.Country);
+        console.log("languages available: " +  movieInfo.Language);
+        console.log("Plot summary: " +  movieInfo.Plot);
+        console.log("Actors: " +  movieInfo.Actors);
+
 
     })
     .catch(function(error) {
