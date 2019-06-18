@@ -41,3 +41,5 @@ Allows you to use the OMDB API via Axios. Using a movie as a selector, it output
 
 ###### do-what-it-says
 Allows you to use a `random.txt` file to issue a command to the app to run one of the three arguments above along with a selector.
+
+[Screenshots of the app in action](https://github.com/hcamposa1994/liri-node-app/tree/master/screenshots)
